@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+
+  "name": "自动签到",
+  "description": "自动签到工具，自定义各个网站的",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_popup": "html/popup.html"
+  },
+
+  "background": {
+    "persistent": true,
+    "scripts": ["js/jquery-3.2.1.min.js", "js/vpnsigin.js", "js/background.js"]
+  },
+  // 需要直接注入页面的JS
+  "content_scripts": [{
+    // "matches": ["http://*/*", "https://*/*"],"<all_urls>" 表示匹配所有地址
+    // "matches": ["https://blog.csdn.net/*"],
+    "matches": ["http://*/*", "https://*/*"],
+    // 多个JS按顺序注入
+    "js": ["js/jquery-3.2.1.min.js", "js/vpnsigin.js", "js/background.js"],
+    // "css": ["css/custom.css"],
+    // 代码注入的时间，可选值： "document_start", "document_end", or "document_idle"，
+    // document_idle表示页面空闲时，为默认值
+    "run_at": "document_start"
+  }],
+  "permissions": [
+    "activeTab",
+    "background",
+    "cookies",
+    "alarms",
+    "tabs",
+    "<all_urls>",
+    "*://*.*.com/*",
+    "notifications"
+  ]
+}
