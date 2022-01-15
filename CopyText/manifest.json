@@ -8,6 +8,13 @@
       "activeTab",
       "scripting"
     ],
+    "action": {
+      "default_title": "Hello, developer!",
+      "default_icon": "/images/logo.png" // 浏览器右上角图标设置
+    },
+    "icons": {
+      "128": "/images/logo.png"
+    },
     "background": {
       "service_worker": "background.js"
     }
