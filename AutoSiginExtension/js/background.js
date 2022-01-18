@@ -44,11 +44,11 @@ chrome.runtime.onInstalled.addListener(() => {
   };
 });
 
-function notificationSiginOk() {
+function notificationSiginOk(message) {
   let okOpt = {
     type: "basic",
-    title: "签到",
-    message: "签到成功" + new Date().getHours() + ":" + new Date().getMinutes(),
+    title: "签到" + new Date().getHours() + ":" + new Date().getMinutes(),
+    message: message,
     iconUrl: "../images/logo.png",
   };
   chrome.notifications.create(
@@ -60,7 +60,7 @@ function notificationSiginOk() {
 
 async function startSigin() {
   let hasLoginPage = false;
-  let nameLists = ["_ga","koa:sess","koa:sess.sig", "_gid"];
+  let nameLists = ["_ga", "koa:sess", "koa:sess.sig", "_gid"];
   let promises = nameLists.map((item) => {
     return chrome.cookies.get({
       url: "https://glados.rocks",
@@ -74,33 +74,39 @@ async function startSigin() {
   }
   console.log("cookies all:", cookies);
 
-  let cookiesStr = cookies.join(';')
-  chrome.storage.sync.set({ startSigin: cookiesStr});
+  let cookiesStr = cookies.join(";");
+  chrome.storage.sync.set({ startSigin: cookiesStr });
   if (cookies.length) {
     hasLoginPage = true;
-    fetchPost(cookiesStr)
+    fetchPost(cookiesStr);
   } else {
     console.log("请你先在chrome中登陆一次glados的任何界面，然后再打开本程序");
   }
 }
 async function fetchPost(cookie) {
+  const myHeaders = new Headers({
+    "Content-Type": "application/json;charset=UTF-8",
+    origin: "https://glados.rocks",
+    cookie: cookie,
+  });
+
   let myInit = {
     method: "POST",
-    headers: {
-      "Content-Type": "image/jpeg",
-      cookie: cookie
-    },
+    headers: myHeaders,
     mode: "cors",
     cache: "default",
+    body: JSON.stringify({ token: "glados_network" }),
   };
   const myRequest = new Request(
     "https://glados.rocks/api/user/checkin",
     myInit
   );
-  let result = await fetch(myRequest);
-  console.log('fetch sigin result:',result);
-  if(result.status === 200 && result.ok){
-    notificationSiginOk();
+  let response = await fetch(myRequest);
+  let responseJson = await response.json();
+  console.log("fetch sigin responseJson:", responseJson);
+  if (response.status === 200 && response.ok && responseJson.code === 1) {
+    let tipsMessage = responseJson.message || "提示";
+    notificationSiginOk(tipsMessage);
   }
 }
 
@@ -109,16 +115,12 @@ async function fetcLogin(cookie) {
     method: "POST",
     headers: {
       "Content-Type": "image/jpeg",
-      cookie: cookie
+      cookie: cookie,
     },
     mode: "cors",
     cache: "default",
   };
-  const myRequest = new Request(
-    "https://glados.rocks/api/login",
-    myInit
-  );
+  const myRequest = new Request("https://glados.rocks/api/login", myInit);
   let result = await fetch(myRequest);
-  console.log('fetch sigin result:',result);
-
+  console.log("fetch sigin result:", result);
 }
