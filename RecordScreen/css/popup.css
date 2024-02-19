@@ -1,0 +1,124 @@
+body {
+    width: 400px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    background-color: #f8f8f8;
+  }
+  svg:not(:root){
+    overflow: hidden;
+  }
+  
+  .color-ani{
+    animation: text1MaskedAnimation 3s infinite linear;
+
+  }
+  .tools-block{
+    display: flex;
+    padding: 20px 0 0 0;
+    align-items: flex-start;
+    width: 100%;
+    height: 60px;
+    justify-content: space-around;
+
+  }
+  .color-wrap{
+    /* width: 100%; */
+    color: transparent;
+    text-align: center;
+    font-weight: 700;
+    background-image: linear-gradient(90deg, #409eff, #ff2e45 25%, #409eff 50%, #ff2e45 75%, #409eff);
+    background-size: 200% 100%;
+    /* background-image: linear-gradient(90deg,#409eff,#ff2e45); */
+    -webkit-background-clip: text;
+    background-clip: text;
+    border: none;
+    outline: none;
+     cursor: pointer;
+  }
+  .color-btn2{
+    border: none;
+    outline: none;
+    border: 1px solid #cdc6c6;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-block;
+  }
+  .color-btn{
+    color: transparent;
+    text-align: center;
+    font-weight: 700;
+    background-image: linear-gradient(90deg,#409eff,#ff2e45);
+    -webkit-background-clip: text;
+    background-clip: text;
+    border: none;
+    outline: none;
+    border: 1px solid #cdc6c6;
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .show-block{
+    padding: 0 0 0 130px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .color-text{
+    font-size: 16px;
+    color: transparent;
+    text-align: center;
+    font-weight: 700;
+    background-image: linear-gradient(90deg,#409eff,#ff2e45);
+    -webkit-background-clip: text;
+    background-clip: text;
+    border: none;
+    outline: none;
+  }
+  .color-input{
+    height: 16px;
+    padding: 5px 10px;
+    background-color: transparent;
+    border-radius: 4px;
+    color: #ff2e45;
+    border: 1px solid rgb(31, 191, 202);
+    font-size: 14px;
+    transition: all .3s;
+  }
+  .color-input:focus{
+    border: 1px solid rgb(7, 173, 185);
+    /* border: none; */
+    /* box-shadow: 0px 0px 0px 2px #ff2e45; */
+  }
+  .color-input:focus-visible{
+    outline: none;
+  }
+
+  .text-sm{
+    font-size: 12px;
+    color: #999;
+    margin-left: 2px;
+    margin-right: 2px;
+  }
+  
+  .text-lg{
+    font-size: 24px;
+  }
+  .text-with{
+    display: block;
+  }
+
+
+  @-webkit-keyframes text1MaskedAnimation {
+    0% {
+        background-position: 0 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
